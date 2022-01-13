@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Main {
 
     private static File BookLibrary = new File("BookLibrary.txt");
-    private static File ConfirmLogin = new File ("ConfirmLogin.txt");
+    private static File ConfirmLogin = new File("ConfirmLogin.txt");
     private static ArrayList<String> BookInfo = new ArrayList<>();
     private static Scanner x;
 
@@ -18,11 +18,12 @@ public class Main {
         Register();
         Menu();
         GetBookDetails();
-        //WriteToFile();
-        //ReadFile();
-        //DeleteFile();
+        WriteToFile();
+        ReadFile();
+        DeleteFile();
 
     }
+
     public static void CreateFile() {
 
         try {
@@ -30,7 +31,7 @@ public class Main {
                 ConfirmLogin.createNewFile();
                 System.out.println("File created: " + BookLibrary.getName());
                 System.out.println("File created: " + ConfirmLogin.getName());
-            }else{
+            } else {
                 System.out.println("File already exists");
             }
         } catch (Exception e) {
@@ -38,7 +39,8 @@ public class Main {
             e.printStackTrace();
         }
     }
-    public static void ConfirmLogin(){
+
+    public static void ConfirmLogin() {
         System.out.println("Would you like to login or register?");
         Scanner input = new Scanner(System.in);
         while (true) {
@@ -47,18 +49,19 @@ public class Main {
                 VerifyLogin();
                 break;
 
-            }if (userInput.equals("register")) {
+            }
+            if (userInput.equals("register")) {
                 Register();
                 break;
 
-            }else {
+            } else {
                 System.out.println("Error");
             }
         }
     }
 
 
-    public static void VerifyLogin(){
+    public static void VerifyLogin() {
 
         Scanner Login = new Scanner(System.in);
         System.out.println("Enter your username: ");
@@ -71,24 +74,24 @@ public class Main {
         String tempUsername = "";
         String tempPassword = "";
 
-        try{
+        try {
             x = new Scanner(new File(filepath));
             x.useDelimiter("[,\n]");
 
-            while (x.hasNext() && !found){
+            while (x.hasNext() && !found) {
                 tempUsername = x.next();
                 tempPassword = x.next();
 
                 if (tempUsername.trim().equals(username.trim()) && tempPassword.trim().equals(password.trim())) {
 
                     found = true;
-                }break;
+                }
+                break;
             }
             x.close();
             System.out.println(found);
 
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("An error occurred while logging in");
         }
     }
@@ -166,6 +169,39 @@ public class Main {
 
     }
 
+    public static void WriteToFile() {
 
+        try {
+            FileWriter myWriter = new FileWriter(BookLibrary.getName(), true); //True means append to file contents, False means overwrite
+            myWriter.write(String.valueOf(BookInfo));
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (Exception e) {
+            System.out.println("An error occurred whilst writing to the file.");
+            e.printStackTrace();
+        }
+    }
 
+    public static void ReadFile(){
+        try{
+            Scanner myReader = new Scanner(BookLibrary);
+            while (myReader.hasNextLine()){
+                String data = myReader.nextLine();
+                System.out.println(data);
+            }
+            myReader.close();
+        }catch (FileNotFoundException e){
+            System.out.println("An error occurred whilst trying to read the contents of the file");
+            e.printStackTrace();
+        }
+    }
+
+    public static void DeleteFile(){
+        if (BookLibrary.delete()){
+            System.out.println("Successfully deleted the file " + BookLibrary.getName());
+        }else{
+            System.out.println("Failed to delete the file.");
+        }
+    }
 }
+
