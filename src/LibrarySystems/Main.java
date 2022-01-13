@@ -4,14 +4,38 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+// Developer Notes
+// Line 33 - States File 'BookLibrary' where all Array Lists containing each user's books will be stored.
+// Line 34 - Creates ArrayList BookInfo' where each user's book will be listed before adding to a general file.
+// Line 51 - 63 - The program creates the BookLibrary file and prints an error if something goes wrong using a try-catch.
+// Line 66 - 85 - Confirms Login: Depending on the users input, will either take you to the login or register page by initiating the login (Line 73 - 106) or register (Line 107 - 128).       (Incomplete)
+// Line 149 - 167 - Main Menu: User is asked to tell the program which option they would like to take on. Then the option is initiated.                                                        (Incomplete)
+// Line 170 - 194 - Get Book Details where the key details of the book are taken by the user and listed in an array list. An error is printed if any detail is entered in the wrong format.    ( Complete )
+// Line 197 - 208 - Write To File: The details stored in the array list are copied over to the BookLibrary File. Error printed if problem occurs.                                              ( Complete )
+// Line 211 - 224 - Read File: Contents of the file are printed out. Error Printed if contents can't be read.                                                                                  ( Complete )
+// Line 227 - 235 - Delete File: Contents in the file are deleted. Error printed if file can't be deleted.                                                                                     (Incomplete)
+
+
+// To-Do List (No particular order for completion)
+
+//(1) Give the user an 'Are you sure' message when deleting a file.                                                                                                                            (Incomplete)
+//(2) Allow the user to borrow books and give a deadline by with they have to be returned.                                                                                                     (Incomplete)
+//(3) Allow the user to return a book.                                                                                                                                                         (Incomplete)
+//(4) Break the loop when a user successfully logs in and continue with the program.                                                                                                           (Incomplete)
+//(5) Complete the menu by adding the borrow, return, search and add/remove book functions.                                                                                                    (Incomplete)
+//(6) Bullet-proof test the program and make sure there are no faults with any input formats.                                                                                                  (Incomplete)
+
+
+
 public class Main {
 
     private static File BookLibrary = new File("BookLibrary.txt");
-    private static File ConfirmLogin = new File("ConfirmLogin.txt");
     private static ArrayList<String> BookInfo = new ArrayList<>();
     private static Scanner x;
 
     public static void main(String[] args) {
+
         CreateFile();
         ConfirmLogin();
         VerifyLogin();
@@ -21,16 +45,14 @@ public class Main {
         WriteToFile();
         ReadFile();
         DeleteFile();
-
     }
+
 
     public static void CreateFile() {
 
         try {
             if (BookLibrary.createNewFile()) {
-                ConfirmLogin.createNewFile();
                 System.out.println("File created: " + BookLibrary.getName());
-                System.out.println("File created: " + ConfirmLogin.getName());
             } else {
                 System.out.println("File already exists");
             }
@@ -40,7 +62,9 @@ public class Main {
         }
     }
 
+
     public static void ConfirmLogin() {
+
         System.out.println("Would you like to login or register?");
         Scanner input = new Scanner(System.in);
         while (true) {
@@ -98,6 +122,7 @@ public class Main {
 
 
     public static void Register() {
+
         Scanner register = new Scanner(System.in);
         System.out.println("Enter your name");
         String username = register.next();
@@ -115,15 +140,14 @@ public class Main {
             writer.write("\n");
             writer.close();
             System.out.println("Successfully registered to the library, hello " + username);
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+
     public static String Menu() {
+
         Scanner input = new Scanner(System.in);
         while (true) {
             System.out.println("Welcome to the book library, here are your options, please enter the number of the action you wish to take place");
@@ -141,6 +165,7 @@ public class Main {
             }
         }
     }
+
 
     public static void GetBookDetails() {
 
@@ -166,8 +191,8 @@ public class Main {
         } catch (Exception e) {
             System.out.println("Error while taking book details");
         }
-
     }
+
 
     public static void WriteToFile() {
 
@@ -182,7 +207,9 @@ public class Main {
         }
     }
 
+
     public static void ReadFile(){
+
         try{
             Scanner myReader = new Scanner(BookLibrary);
             while (myReader.hasNextLine()){
@@ -196,7 +223,9 @@ public class Main {
         }
     }
 
+
     public static void DeleteFile(){
+
         if (BookLibrary.delete()){
             System.out.println("Successfully deleted the file " + BookLibrary.getName());
         }else{
