@@ -32,7 +32,7 @@ public class Main {
 
     private static File BookLibrary = new File("BookLibrary.txt");
     private static ArrayList<String> BookInfo = new ArrayList<>();
-    private static Scanner x;
+
 
     public static void main(String[] args) {
 
@@ -99,18 +99,20 @@ public class Main {
         String tempPassword = "";
 
         try {
-            x = new Scanner(new File(filepath));
+
+           Scanner x = new Scanner(new File(filepath));
             x.useDelimiter("[,\n]");
 
-            while (x.hasNext() && !found) {
-                tempUsername = x.next();
-                tempPassword = x.next();
+            tempUsername = x.next();
+            tempPassword = x.next();
+
+            while (x.hasNext() || !found) {
+
 
                 if (tempUsername.trim().equals(username.trim()) && tempPassword.trim().equals(password.trim())) {
 
                     found = true;
                 }
-                break;
             }
             x.close();
             System.out.println(found);
@@ -126,7 +128,7 @@ public class Main {
         Scanner register = new Scanner(System.in);
         System.out.println("Enter your name");
         String username = register.next();
-        System.out.println("please enter your password");
+        System.out.println("Please enter your password");
         String password = register.next();
         File file = new File("LoginFile.txt");
         String userName = (username);
@@ -182,7 +184,7 @@ public class Main {
             String BookAuthor = bufferedReader.readLine();
 
             System.out.println("Enter the book genre");
-            String BookGenre = scanner.next();
+            String BookGenre = scanner.nextLine();
 
             BookInfo.add(BookTitle);
             BookInfo.add(ISBN);
