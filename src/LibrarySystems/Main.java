@@ -34,6 +34,7 @@ public class Main {
     private static ArrayList<String> BookInfo = new ArrayList<>();
 
 
+
     public static void main(String[] args) {
 
         CreateFile();
@@ -45,6 +46,7 @@ public class Main {
         WriteToFile();
         ReadFile();
         DeleteFile();
+        AddBooks();
     }
 
 
@@ -115,7 +117,7 @@ public class Main {
                 }
             }
             x.close();
-            System.out.println(found);
+            Menu();
 
         } catch (Exception e) {
             System.out.println("An error occurred while logging in");
@@ -136,12 +138,10 @@ public class Main {
         try {
             writer = new FileWriter("LoginFile.txt", true);
             BufferedWriter bw = new BufferedWriter(writer);
-            writer.write(userName);
-            writer.write("\n");
-            writer.write(password);
-            writer.write("\n");
+            writer.write(userName + password);
             writer.close();
             System.out.println("Successfully registered to the library, hello " + username);
+            Menu();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -175,21 +175,21 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Enter the Book Title");
-            String BookTitle = bufferedReader.readLine();
+            String bookTitle = bufferedReader.readLine();
 
             System.out.println("Enter the books ISBN");
             String ISBN = Integer.toString(scanner.nextInt());
 
             System.out.println("Enter the author of the book");
-            String BookAuthor = bufferedReader.readLine();
+            String bookAuthor = bufferedReader.readLine();
 
             System.out.println("Enter the book genre");
-            String BookGenre = scanner.nextLine();
+            String bookGenre = scanner.nextLine();
 
-            BookInfo.add(BookTitle);
+            BookInfo.add(bookTitle);
             BookInfo.add(ISBN);
-            BookInfo.add(BookAuthor);
-            BookInfo.add(BookGenre);
+            BookInfo.add(bookAuthor);
+            BookInfo.add(bookGenre);
         } catch (Exception e) {
             System.out.println("Error while taking book details");
         }
@@ -232,6 +232,24 @@ public class Main {
             System.out.println("Successfully deleted the file " + BookLibrary.getName());
         }else{
             System.out.println("Failed to delete the file.");
+        }
+    }
+
+    public static void AddBooks(){
+        Scanner addBooks = new Scanner(System.in);
+        try{
+            System.out.println("Are you sure you want to add a book to the library? (yes or no)");
+            String confirmationAnswer = addBooks.next();
+            if(confirmationAnswer.equals("yes")){
+                GetBookDetails();
+            }else{
+                if(confirmationAnswer.equals("no")){
+                    Menu();
+                }
+            }
+        }catch (Exception e){
+            System.out.println("Incorrect output, please select yes or no");
+            AddBooks();
         }
     }
 }
